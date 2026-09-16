@@ -71,37 +71,47 @@ I used the three settings as a sensitivity check rather than assuming that one b
     </p>
 
     <!-- ============================================================
-         <iframe width="700" height="600" allow="local-network-access; geolocation" title="Lab 1 · Soho cholera · Yiran" src="https://www.arcgis.com/apps/mapviewer/index.html?configurableview=true&webmap=282904aa4f39485895fc16ebbb2b97be&theme=light&scroll=false&center=-0.13675996815353644,51.513402541385936&scale=1128.497176" ></iframe>
+         <iframe width="700" height="600" allow="local-network-access; 
          ============================================================ -->
     <figure>
       <img src="Map-China.webp" alt="Describe what the map shows, for someone who cannot see it.">
       <!--
-      <iframe src="PASTE-YOUR-ARCGIS-EMBED-URL-HERE"
-              title="Describe your map" loading="lazy"></iframe>
+      <iframe width="700" height="600" allow="local-network-access
+              title=geolocation" title="Lab 1 · Soho cholera · Yiran" src="https://www.arcgis.com/apps/mapviewer/index.html?configurableview=true&webmap=282904aa4f39485895fc16ebbb2b97be&theme=light&scroll=false&center=-0.13675996815353644,51.513402541385936&scale=1128.497176" ></iframe>></iframe>
       -->
       <figcaption>
-        A caption that says what to look at. Not "Figure 1" — tell the reader
-        where their eye should go and what it means.
+       Take a look at the most yellow part of the map and observe the relationship with public water pumps and the heat peak area.
       </figcaption>
     </figure>
 
     <h2>What I found</h2>
     <p>
-      Plain language. What does the map support? Write it so someone outside
-      this course could follow it.
+     The sensitivity check showed that changing the KDE bandwidth changed the appearance of the hotspot and the number of pumps that fell within the hottest colour band.
+With the smallest area of influence, the heat map became very localized, and 0 pumps fell within the hottest colour band.
+With the middle setting, approximately 1 pump fell within the hottest colour band.
+With the largest area of influence, approximately 4 pumps fell within the hottest colour band.
+However, 43 Broadwick Street remained the pump closest to the centre of the hotspot in all three settings.
+     This means that the number of pumps included in the hottest area was sensitive to the bandwidth, while the identity of the pump closest to the hotspot centre remained stable across the three settings I tested.
     </p>
 
     <h2>What this does not show</h2>
     <div class="limits">
       <p>
-        The honest part. What the map cannot support, what you had to assume,
-        and what would change your answer. If your unit of analysis could have
-        been drawn differently, say so here.
+The heat map does not prove that the pump at 43 Broadwick Street caused the cholera outbreak. It also does not show which pump each individual person used. It shows a spatial relationship between recorded cholera deaths and public water pumps, rather than direct evidence of individual water use or causation.
+The appearance of the hotspot also depends on the KDE bandwidth. In my sensitivity check, the number of pumps in the hottest colour band changed from 0 to 1 to 4 as the area of influence increased. A single version of the map would hide this dependence on the parameter.
+The map also contains a historical naming limitation. The pump is labelled 43 Broadwick Street, although the street was known as Broad Street in 1854. The location can still be compared spatially, but the modern street name should not be interpreted as the historical name used during the outbreak.
+Finally, the heat map is an estimated density surface. Its coloured areas are calculated from the observed point data rather than being direct measurements of cholera intensity at every location. Changing the bandwidth changes how broadly each observation contributes to the surrounding area, so a different bandwidth would produce a different visual pattern even though the underlying data stayed the same.
+
+Reflection:
+Parameter
+The main spatial conclusion was partly stable across the three bandwidth settings. The number of pumps in the hottest colour band changed from 0 to 1 to 4, so that part of the interpretation was sensitive to the parameter. However, 43 Broadwick Street remained the pump closest to the centre of the hotspot in all three settings. This suggests that some conclusions from a density map can survive changes in bandwidth, while others may depend strongly on the chosen setting. If I were given a published density map without knowing its bandwidth, I would therefore be cautious about treating the exact shape or boundaries of the hotspot as fixed.
+Unit
+For this map, the main unit is the geocoded cholera address, while the heat map represents an estimated density surface across space. It is important not to describe the coloured area as if it were a direct count of cholera cases in each part of Soho. The surface is calculated from the locations and weights of the recorded addresses. If the unit were left unnamed, a reader might incorrectly assume that the colours represented administrative areas or directly measured rates.
+Who is affected?
+Density maps like this can be used today to help decide where to place public services, health resources, or environmental interventions. The choice of bandwidth could affect which neighborhoods appear to have the greatest concentration and therefore receive attention. For example, if a very broad bandwidth were used for a public-health map, a small local cluster could appear spread across a much larger area. People living near the actual cluster could then be represented less precisely in decisions based on the map.
       </p>
       <p>
-        <strong>AI use:</strong> AI-assisted for [what], using [which tool].
-        I verified [how]. If you did not use AI, write "No AI tools were used
-        for this entry."
+        <strong>AI use:</strong> AI-assisted for organizing and polishing the portfolio wording, using ChatGPT. I checked the final writing against my ArcGIS maps and the Lab 1 instructions. The map analysis, parameter choices, sensitivity observations, and interpretation are my own.
       </p>
     </div>
 
