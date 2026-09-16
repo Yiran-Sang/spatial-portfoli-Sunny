@@ -39,7 +39,7 @@
          information too.
          ============================================================ -->
 
-    <h2>The question：where is china？</h2>
+    <h2>The question：Where were cholera deaths concentrated in Soho, London, in 1854, and how does changing the heat map bandwidth affect the apparent relationship between the cholera hotspot and public water pumps?</h2>
     <p>
       One sentence. It must be answerable, and it must have a "where" in it.
       Write it as a question, with a question mark.
@@ -47,29 +47,31 @@
 
     <h2>The data</h2>
     <p>
-      Where it came from, when it was collected, who made it, and under what
-      licence. Then the part people skip: what is missing from it.
-    </p>
+     I used the Soho cholera teaching web map provided for this lab. The map includes a historical scan of John Snow’s 1854 cholera map, a layer of public water pumps, a layer of cholera cases by address, and a Soho reference layer.
+The cholera case dataset contains 322 geocoded addresses. The Num_Cases field records the number of cholera deaths associated with each address. The public water pump layer contains 12 pumps.
+The data also have an important historical naming issue. The pump closest to the hotspot is labelled 43 Broadwick Street, but the street was called Broad Street in 1854 and was renamed Broadwick Street in 1936. This means that the map combines historical spatial information with a modern street name.
+Source: Esri, Soho cholera teaching web map, based on John Snow’s 1854 cholera map and related cholera-address data.
+One thing the dataset does not show is which water pump each individual person actually used. The map therefore allows me to compare the spatial locations of deaths and pumps, but not individual water-use behavior.
 
     <h2>The method</h2>
     <p>
-      What you actually did, in enough detail that someone else could repeat
-      it. Name the tool, the projection, and any threshold or class break you
-      chose. If you chose a number, say why you chose that number.
+      I used ArcGIS Online Map Viewer to create a weighted Kernel Density Estimation (KDE) heat map.
+I used Num_Cases as the weighting field. This means that addresses with more recorded deaths contribute more strongly to the density surface. The result is therefore a map of estimated cholera-death concentration rather than simply a map showing where the 322 addresses are located.
+The KDE bandwidth was controlled using ArcGIS's Area of influence slider. The interface does not show the numerical bandwidth value, so I tested three relative settings:
+
+Far left: smallest area of influence
+Middle: medium area of influence
+Far right: largest area of influence
+
+I kept the map extent the same for all three settings so that I could compare the results consistently.
+For each setting, I recorded:
+how many of the 12 public water pumps fell within the hottest colour band;
+whether 43 Broadwick Street was the pump closest to the centre of the hotspot.
+I used the three settings as a sensitivity check rather than assuming that one bandwidth was automatically correct.
     </p>
 
     <!-- ============================================================
-         YOUR MAP
-         Two options:
-
-         1. An image. Export a PNG from ArcGIS or QGIS, put it in this
-            labs folder, and change the src below to your filename
-            (for example src="map-01.png").
-
-         2. A live web map. Publish it in ArcGIS Online, choose Share,
-            then Embed, and paste the src URL into the <iframe> line.
-
-         Delete whichever one you are not using.
+         <iframe width="700" height="600" allow="local-network-access; geolocation" title="Lab 1 · Soho cholera · Yiran" src="https://www.arcgis.com/apps/mapviewer/index.html?configurableview=true&webmap=282904aa4f39485895fc16ebbb2b97be&theme=light&scroll=false&center=-0.13675996815353644,51.513402541385936&scale=1128.497176" ></iframe>
          ============================================================ -->
     <figure>
       <img src="Map-China.webp" alt="Describe what the map shows, for someone who cannot see it.">
