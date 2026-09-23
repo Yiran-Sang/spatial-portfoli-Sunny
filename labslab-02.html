@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lab 02 ·  Sunny Sang</title>
+
+<!-- Note the ../ — this page is inside the labs folder, so it has to
+     look one level up to find the stylesheet. -->
+<link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="../index.html">Sunny Sang</a>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="../index.html#labs">Labs</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<article class="entry">
+  <div class="wrap wrap-narrow">
+
+    <p class="kicker">Lab 02 · September 2026</p>
+
+    <!-- EDIT THIS: a title that says what you found, not what you did.
+         "Where the metro does not go" beats "Lab 1 report". -->
+    <h1>Map 1 Soho Cholera</h1>
+
+    <!-- ============================================================
+         The six parts. Every entry in this course has all six.
+         Do not delete a heading — if a section is thin, that is
+         information too.
+         ============================================================ -->
+
+    <h2>The question：</h2>
+    <p>
+       Where was Democratic support concentrated or dispersed in the 2016 US presidential election?
+
+    <h2>The data</h2>
+    <p>
+     The data comes from Esri's public teaching layer Presidential Election 2016, published under the account Teach_with_GIS, with 3,139 county-level records.    
+    <p>Auditing the table revealed three undisclosed defects: 
+          <p>(1) the DEM_votes field is empty in every row — the field with actual data is votes_DEM;    
+    <p>(2) the legend aliases DEM_per and GOP_per as "%", but the stored values are proportions (0–1), not percentages; 
+          <p>(3) all 28 Alaska borough rows carry the identical statewide totals (93,003 DEM votes, 130,413 GOP votes), so summing over rows counts Alaska 28 times. 
+                <p>Even after correcting the Alaska duplication, national vote totals (approx. DEM 62.5M / GOP 61.2M) fall several million short of the certified result (DEM 65,853,514 / GOP 62,984,828), for reasons this lab could not diagnose from inside the file. This is reported, not corrected.
+    <h2>The method</h2>
+    <p>
+     Each of the four maps encodes the same underlying data on a different visual channel:
+       <p>(1) Predominant category uses hue to show which of DEM_per or GOP_per is larger for each county, with transparency showing the margin; 
+          <p>(2) Graduated symbol uses circle size to encode Total_Votes, with a transparent fill applied to mitigate occlusion in dense areas;
+             <p>(3) Standardised score uses a custom Arcade expression standardising DEM_per into a z-score (z = (value − mean) / sd, mean ≈ 0.3174, sd ≈ 0.1527, computed across all 3,139 counties with no filter applied), verified against three known values — New York County (+3.63), Los Angeles County (+2.60), King County, TX (−1.87) — and styled with a diverging ramp (Above and below theme); 
+                <p>(4) Cartogram, built in go-cart.io at the state level, with area set to Votes_total and colour set to Pct_DEM (quintiles); the supplied CSV corrects the Alaska duplication back to a single statewide figure but leaves the reconciliation gap against the certified result untouched. The published classification scheme (from the Part 4 sensitivity check) is Natural breaks with 5 classes. The z-score constants are relative to the national county average, not any filtered subset.
+    </p>
+
+    <!-- ============================================================
+         <iframe width="700" height="600" allow="local-network-access; 
+         ============================================================ -->
+    <figure>
+      <img src="Soho_cholera_left.png" >
+          <img src="Soho_cholera_middle.png" >
+          <img src="Soho_cholera_right.png" >
+      <!--
+      </iframe>
+      -->
+      <figcaption>
+       Take a look at the most yellow part of the map and observe the relationship with public water pumps and the heat peak area.
+      </figcaption>
+    </figure>
+
+    <h2>What I found</h2>
+    <p>
+     The most significant finding came from Part 2: the Republican candidate won about 84% of counties (2,555 vs. 408), while the two parties' national vote totals were nearly level (about 65.0M vs. 64.7M; the gap widens to roughly 62.5M vs. 61.2M once the Alaska duplication is corrected). Both facts come from the same 3,139-row table, but Map 1 (a choropleth) can only show the county count. Separately, the three classification schemes in Part 4 (equal interval / quantile / natural breaks) produced entirely different breaks and top-class county counts from the same DEM_per column — showing that the argument "support was broad vs. concentrated" depends heavily on the classification method chosen, not on any change in the underlying data. The New York close-up in Map 2 further confirms Thursday's point: the proportional symbol escapes the choropleth's area problem but buys an occlusion problem — and the occlusion is worst exactly where the data is densest and most worth looking at.
+    </p>
+
+    <h2>What this does not show</h2>
+    <div class="limits">
+      <p>
+None of the four maps shows third-party voters — in 78 counties they exceed a tenth of the vote, yet DEM_per and GOP_per do not sum to 1, and the missing share is not drawn in any form on Map 1. Non-voters (unregistered or non-participating residents) are likewise entirely outside the scope of this dataset. See the AI-usage disclosure below regarding AI assistance used in drafting this entry and formatting the HTML.
+           
+      <p>
+        
+    </div>
+
+    <a class="back" href="../index.html#labs">← Back to all labs</a>
+
+  </div>
+</article>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap wrap-narrow">
+    <p>Sunny· SOCS-SHU 205 · NYU Shanghai · Fall 2026</p>
+  </div>
+</footer>
+
+</body>
+</html>
