@@ -76,7 +76,74 @@
        All four figures are captioned with a legend naming the unit. Map 3 (z-score) is labelled in standard-deviation units, distinct from the "% DEM" labels used elsewhere
       </figcaption>
     </figure>
+<h3>8.1 The comparison</h3>
+<table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%;">
+  <thead>
+    <tr>
+      <th>Map</th>
+      <th>Visual channel</th>
+      <th>What it makes easy to see</th>
+      <th>What it hides or distorts</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1 · Predominant category</td>
+      <td>Hue</td>
+      <td>Nearly the whole country appears in a single colour, making it immediately clear that Republicans won an overwhelming majority of counties.</td>
+      <td>It shows no gradation of margin, and third-party voters are entirely absent; sparsely populated counties occupy far more visual weight than their population warrants.</td>
+    </tr>
+    <tr>
+      <td>2 · Graduated symbol</td>
+      <td>Size</td>
+      <td>Dense metro areas (New York, Los Angeles, San Francisco) stand out clearly with their vote-count magnitude; sparsely populated counties no longer dominate the view by land area the way they do in a choropleth.</td>
+      <td>The New York close-up shows several circles overlapping (Manhattan, Brooklyn, Queens and neighbouring counties nearly stacked together), making individual county values hard to distinguish; the occlusion occurs precisely where the data is densest and most interesting — a structural cost of this visual channel, not bad luck.</td>
+    </tr>
+    <tr>
+      <td>3 · Standardised score</td>
+      <td>Value (lightness)</td>
+      <td>It clearly shows which regions deviate most from the national average county — coastal and urban areas read very differently from the interior, with extreme deviations immediately visible.</td>
+      <td>The pale midpoint (z near 0) reads as neutral, but it actually represents a county with only about 32% Democratic support — easily misread by a reader as a "balanced" or "ordinary" position.</td>
+    </tr>
+    <tr>
+      <td>4 · Cartogram</td>
+      <td>Area</td>
+      <td>It reallocates each state's visual area by true vote weight — populous, high-turnout states (California, New York, Texas) swell visibly while smaller states shrink, closer to the intuition that every vote counts equally.</td>
+      <td>Geographic shape is heavily distorted, making individual states hard to recognise by outline alone; real distance and direction are lost entirely.</td>
+    </tr>
+  </tbody>
+</table>
 
+<p>A campaign would likely choose whichever map favours its own coalition — a party that wins on geography would favour Map 1, since a choropleth makes "owning more land" look like a commanding lead; a party whose support concentrates in cities would favour Map 2 or Map 4, which better reflect true population/vote weight. As the analyst, I would publish <strong>Map 4 (Cartogram)</strong> together with the full disclosure below, because it most directly encodes how much each vote weighs into visual area, rather than letting sparsely populated, land-heavy regions shout louder than their actual weight. This is defensible rather than merely convenient: it directly answers the core problem diagnosed in Part 2 — that a choropleth gives area a voice disproportionate to population — rather than being chosen simply because it looks compelling.</p>
+
+<h3>8.2 The disclosure block</h3>
+<table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%;">
+  <thead>
+    <tr>
+      <th>Report</th>
+      <th>Yours</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>The scheme, named</td>
+      <td>Natural breaks, 5 classes.</td>
+    </tr>
+    <tr>
+      <td>The class count, and why that count</td>
+      <td>5 classes. This count was held constant across all three schemes in the Part 4 sensitivity check, balancing enough detail against legend clutter and enabling a fair side-by-side comparison.</td>
+    </tr>
+    <tr>
+      <td>One alternative scheme, mapped, and what changed</td>
+      <td>Compared with Equal interval (breaks at 0.21 / 0.39 / 0.569 / 0.749): Natural breaks (0.206 / 0.314 / 0.438 / 0.596) puts noticeably more counties in the top class (&gt;0.596) than equal interval's top class (&gt;0.749), because natural breaks follows the actual clustering in the data rather than mechanically dividing the range.</td>
+    </tr>
+    <tr>
+      <td>The claim you would still make if the scheme changed</td>
+      <td>Regardless of the classification scheme used, the core contrast — Republicans won about 84% of counties, yet the two parties' national vote totals were nearly level — holds unchanged, because it comes from the Part 2 county-count-vs-vote-sum comparison, not from any choice made in Part 4's classification.</td>
+    </tr>
+  </tbody>
+</table>
+       
     <h2>What I found</h2>
     <p>
      The most significant finding came from Part 2: the Republican candidate won about 84% of counties (2,555 vs. 408), while the two parties' national vote totals were nearly level (about 65.0M vs. 64.7M; the gap widens to roughly 62.5M vs. 61.2M once the Alaska duplication is corrected). Both facts come from the same 3,139-row table, but Map 1 (a choropleth) can only show the county count. Separately, the three classification schemes in Part 4 (equal interval / quantile / natural breaks) produced entirely different breaks and top-class county counts from the same DEM_per column — showing that the argument "support was broad vs. concentrated" depends heavily on the classification method chosen, not on any change in the underlying data. The New York close-up in Map 2 further confirms Thursday's point: the proportional symbol escapes the choropleth's area problem but buys an occlusion problem — and the occlusion is worst exactly where the data is densest and most worth looking at.
