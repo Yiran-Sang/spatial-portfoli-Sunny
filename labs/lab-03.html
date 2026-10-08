@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Lab 02 ·  Sunny Sang</title>
+<title>Lab 03 ·  Sunny Sang</title>
 
 <!-- Note the ../ — this page is inside the labs folder, so it has to
      look one level up to find the stylesheet. -->
@@ -27,7 +27,7 @@
 <article class="entry">
   <div class="wrap wrap-narrow">
 
-    <p class="kicker">Lab 02 · September 2026</p>
+    <p class="kicker">Lab 03 · October 2026</p>
 
     <!-- EDIT THIS: a title that says what you found, not what you did.
          "Where the metro does not go" beats "Lab 1 report". -->
@@ -41,26 +41,43 @@
 
     <h2>The question：</h2>
     <p>
-       Where was Democratic support concentrated or dispersed in the 2016 US presidential election?
-
+      How many square kilometres did the 2016 Soberanes Fire burn in Monterey County, California, and how much of that figure depends on the frame (projection, grid and terrain) in which it is measured?
     <h2>The data</h2>
     <p>
-     The data comes from Esri's public teaching layer Presidential Election 2016, published under the account Teach_with_GIS, with 3,139 county-level records.    
-    <p>Auditing the table revealed three undisclosed defects: 
-          <p>(1) the DEM_votes field is empty in every row — the field with actual data is votes_DEM;    
-    <p>(2) the legend aliases DEM_per and GOP_per as "%", but the stored values are proportions (0–1), not percentages; 
-          <p>(3) all 28 Alaska borough rows carry the identical statewide totals (93,003 DEM votes, 130,413 GOP votes), so summing over rows counts Alaska 28 times. 
-                <p>Even after correcting the Alaska duplication, national vote totals (approx. DEM 62.5M / GOP 61.2M) fall several million short of the certified result (DEM 65,853,514 / GOP 62,984,828), for reasons this lab could not diagnose from inside the file. This is reported, not corrected.
-    <h2>The method</h2>
+     Burn perimeter: Soberanes_Perimeter, a hosted feature layer published by Esri's Teach_with_GIS account on ArcGIS Online 
+          <p>(https://services2.arcgis.com/j80Jz20at6Bi0thr/arcgis/rest/services/Soberanes_Perimeter/FeatureServer/0/query?where=1%3D1&outFields=*&returnGeometry=false&f=pjson).  <p>One feature, three fields: Id, Shape__Area, Shape__Length.
+   
+       Imagery: Landsat 8-9 through the Esri Landsat Explorer.    <p>
+            Elevation: the Esri world elevation surface, used in ArcGIS Scene Viewer.
+             <p>Geoid heights: read from the GeographicLib GeoidEval calculator (EGM2008, EGM96, EGM84).
+                 <p> First, the coordinate system is not visible on the map, in the legend, in the pop-up or in the attribute table. It is stated only in the service definition: "wkid": 102100, "latestWkid": 3857, which is WGS 84 / Pseudo-Mercator (Web Mercator). The Shape__Area value of about 824.6 million m² is therefore the area of the fire as drawn on a Mercator sheet. Second, the single feature is not one polygon. The service delivers it as 690 rings in WGS 84 and 755 rings in Web Mercator. 686 of the 690 rings are smaller than 900 m², the area of one Landsat cell, so they cannot be observations of anything. They are what is left when a raster is traced into vectors. 
+               <h2>The method</h2>
     <p>
-     Each of the four maps encodes the same underlying data on a different visual channel:
-       <p>(1) Predominant category uses hue to show which of DEM_per or GOP_per is larger for each county, with transparency showing the margin; 
-          <p>(2) Graduated symbol uses circle size to encode Total_Votes, with a transparent fill applied to mitigate occlusion in dense areas;
-             <p>(3) Standardised score uses a custom Arcade expression standardising DEM_per into a z-score (z = (value − mean) / sd, mean ≈ 0.3174, sd ≈ 0.1527, computed across all 3,139 counties with no filter applied), verified against three known values — New York County (+3.63), Los Angeles County (+2.60), King County, TX (−1.87) — and styled with a diverging ramp (Above and below theme); 
-                <p>(4) Cartogram, built in go-cart.io at the state level, with area set to Votes_total and colour set to Pct_DEM (quintiles); the supplied CSV corrects the Alaska duplication back to a single statewide figure but leaves the reconciliation gap against the certified result untouched. The published classification scheme (from the Part 4 sensitivity check) is Natural breaks with 5 classes. The z-score constants are relative to the national county average, not any filtered subset.
-    </p>
+     （1）Opened the perimeter layer in ArcGIS Map Viewer and read Shape__Area and Shape__Length from the attribute table. Then read the layer's own query endpoint (/query?where=1=1&outFields=*&returnGeometry=false&f=pjson) to find the units (esriMeters) and the spatial reference (EPSG:3857). Looked up 3857 on epsg.io.
+    <p> （2）Wrote this Arcade expression in the pop-up and read the numbers it returned:
+<p>var planar = Area($feature, 'square-kilometers');
+<p>var globe  = AreaGeodetic($feature, 'square-kilometers');
+<p>var acres  = AreaGeodetic($feature, 'acres');
 
-    <!-- ============================================================
+<p>return  'planar   ' + Round(planar, 3) + ' km2'
+  <p> + TextFormatting.NewLine
+  <p> +    'geodetic ' + Round(globe,  3) + ' km2'
+   <p>+ TextFormatting.NewLine
+  <p> +    'geodetic ' + Round(acres,  0) + ' acres'
+   <p>+ TextFormatting.NewLine
+   <p>+    'ratio    ' + Round(planar / globe, 4)
+   <p>+ TextFormatting.NewLine
+   <p>+    'rings    ' + Count(Geometry($feature).rings);
+<p>Area() is planar, in whatever frame the stored coordinates are in (here Web Mercator). AreaGeodetic() measures on the WGS 84 ellipsoid.
+   
+<p> （3）Traced the burn by eye with the Map Viewer measurement tool, about a dozen vertices, in 2 minutes. Map Viewer measures geodetically, so this is comparable with AreaGeodetic(). I first read it in square miles (200.30 mi²) and converted it (× 2.589988).</p>
+<p> （4）Converted the published incident figure of 132,127 acres to km² (× 4,046.86 m² per acre).
+ <p> （5）The UTM zone 10N (533.929 km²) and California Albers (534.182 km²) areas were given by the lab handout, because a layer I do not own cannot be reprojected in ArcGIS Online.    
+   <p> （6）Predicted the Web Mercator area inflation as sec²(φ) − 1 = tan²(φ), and computed grid uncertainty bands as geodetic perimeter × cell size (441.955 km × cell size).
+    <p> （7）In Scene Viewer, draped the perimeter on the terrain and drew an elevation profile across the burn through steep ground (12.3 mi long). I read the average slope and computed the surface-area factor 1 / cos(slope) and multiplied it by the geodetic area.
+      <p> （8）Read the geoid height N at the fire, at this campus and at Everest in three global models. Converted heights with h = H + N. For the fire I use EGM2008 as my reference model, because it is the most recent of the three.
+<p> 
+         <!-- ============================================================
          <iframe width="700" height="600" allow="local-network-access; 
          ============================================================ -->
     <figure>
