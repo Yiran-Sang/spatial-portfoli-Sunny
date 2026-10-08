@@ -89,26 +89,27 @@
   <figure>
        <p><img src="lab3-figure1.png" >
          <figcaption>
-       All four figures are captioned with a legend naming the unit. Map 3 (z-score) is labelled in standard-deviation units, distinct from the "% DEM" labels used elsewhere
+      Figure 1.
+Esri Landsat Explorer swipe comparison of two Landsat 8-9 scenes near Big Sur, with Highway 1 running down the middle. The left pane is the 6.20 scene and the right pane is the 10.26 scene, so the burn scar appears as the change in colour between them. Cell size is 30 m. No area is measured in this figure.
       </figcaption>
          <p><img src="lab3-figure2.png" >
               <figcaption>
-       All four figures are captioned with a legend naming the unit. Map 3 (z-score) is labelled in standard-deviation units, distinct from the "% DEM" labels used elsewhere
-      </figcaption>
+       Figure 2.
+Landsat 8-9 image zoomed in past the point where it gets sharper, near Coast Ridge Road in the Santa Lucia Range. Each 30 m cell holds a single value, so the image contains no detail finer than one cell. The viewer smooths the cells, so the grid shows as soft blocks rather than hard squares. No area is measured in this figure.
          <p><img src="lab3-figure3.png" >
            <figcaption>
-       All four figures are captioned with a legend naming the unit. Map 3 (z-score) is labelled in standard-deviation units, distinct from the "% DEM" labels used elsewhere
+       Figure 3.
+The Soberanes perimeter as an unfilled outline in Map Viewer, stored in Web Mercator (EPSG:3857), shown at full extent. The small black dots inside the main outline are detached rings, and 686 of the 690 rings are smaller than one 30 m Landsat cell (900 m²). The ragged edge follows the cells of the raster the boundary was traced from. No area is measured in this figure.
       </figcaption>
          <p> <img src="lab3-figure4.png" >
           <figcaption>
-       All four figures are captioned with a legend naming the unit. Map 3 (z-score) is labelled in standard-deviation units, distinct from the "% DEM" labels used elsewhere
+       Figure 4.
+Scene Viewer scene “Lab 3 · Soberanes terrain”: the perimeter (stored in EPSG:3857) over the Terrain3D ground surface, with an elevation profile drawn across the burn. The profile is 12.3 mi (19.8 km) long, rises from about 460 ft (140 m) to 4,082 ft (1,244 m), and has an average slope of 21.6° uphill and 21.0° downhill. Heights are in feet, as reported by the Scene Viewer tool. No area is stated in this figure.
       </figcaption>
          
          <p> <img src="lab3-figure5.png" >
       
                <figcaption>
-       All four figures are captioned with a legend naming the unit. Map 3 (z-score) is labelled in standard-deviation units, distinct from the "% DEM" labels used elsewhere
-      </figcaption>
               <!--
       </iframe>
       -->
@@ -149,34 +150,7 @@
 
 <p>A campaign would likely choose whichever map favours its own coalition — a party that wins on geography would favour Map 1, since a choropleth makes "owning more land" look like a commanding lead; a party whose support concentrates in cities would favour Map 2 or Map 4, which better reflect true population/vote weight. As the analyst, I would publish <strong>Map 4 (Cartogram)</strong> together with the full disclosure below, because it most directly encodes how much each vote weighs into visual area, rather than letting sparsely populated, land-heavy regions shout louder than their actual weight. This is defensible rather than merely convenient: it directly answers the core problem diagnosed in Part 2 — that a choropleth gives area a voice disproportionate to population — rather than being chosen simply because it looks compelling.</p>
 
-<h3>The disclosure block</h3>
-<table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%;">
-  <thead>
-    <tr>
-      <th>Report</th>
-      <th>Yours</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>The scheme, named</td>
-      <td>Natural breaks, 5 classes.</td>
-    </tr>
-    <tr>
-      <td>The class count, and why that count</td>
-      <td>5 classes. This count was held constant across all three schemes in the Part 4 sensitivity check, balancing enough detail against legend clutter and enabling a fair side-by-side comparison.</td>
-    </tr>
-    <tr>
-      <td>One alternative scheme, mapped, and what changed</td>
-      <td>Compared with Equal interval (breaks at 0.21 / 0.39 / 0.569 / 0.749): Natural breaks (0.206 / 0.314 / 0.438 / 0.596) puts noticeably more counties in the top class (&gt;0.596) than equal interval's top class (&gt;0.749), because natural breaks follows the actual clustering in the data rather than mechanically dividing the range.</td>
-    </tr>
-    <tr>
-      <td>The claim you would still make if the scheme changed</td>
-      <td>Regardless of the classification scheme used, the core contrast — Republicans won about 84% of counties, yet the two parties' national vote totals were nearly level — holds unchanged, because it comes from the Part 2 county-count-vs-vote-sum comparison, not from any choice made in Part 4's classification.</td>
-    </tr>
-  </tbody>
-</table>
-       
+
     <h2>What I found</h2>
     <p>
      The planar Web Mercator area is 1.544 times the geodetic area, which is 54% of the fire invented by a projection. The geodetic measurement (533.891), the UTM zone 10N and California Albers areas (533.929 and 534.182) and the area implied by the agency's acreage (534.70) agree to within about 0.2%. The odd one out is the frame the file arrived in. 
