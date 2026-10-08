@@ -80,28 +80,44 @@
          <!-- ============================================================
          <iframe width="700" height="600" allow="local-network-access; 
          ============================================================ -->
-    <figure>
-       <p><img src="lab02-map1.png" >
-         <p><img src="lab02-map2-whole.png" >
-               <p><img src="lab02-map2-NY.png" >
-           <p> <img src="lab02-map3.png" >
-          <p> <img src="lab02-map4-1.png" >
-      <!--
-      </iframe>
-      -->
-      <figcaption>
-       All four figures are captioned with a legend naming the unit. Map 3 (z-score) is labelled in standard-deviation units, distinct from the "% DEM" labels used elsewhere
-      </figcaption>
-    </figure>
-<h3>The comparison</h3>
-<table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%;">
-  <thead>
-    <tr>
+    
       <th>Map</th>
       <th>Visual channel</th>
       <th>What it makes easy to see</th>
       <th>What it hides or distorts</th>
-    </tr>
+    
+  <figure>
+       <p><img src="lab3-figure1.png" >
+         <figcaption>
+       All four figures are captioned with a legend naming the unit. Map 3 (z-score) is labelled in standard-deviation units, distinct from the "% DEM" labels used elsewhere
+      </figcaption>
+         <p><img src="lab3-figure2.png" >
+              <figcaption>
+       All four figures are captioned with a legend naming the unit. Map 3 (z-score) is labelled in standard-deviation units, distinct from the "% DEM" labels used elsewhere
+      </figcaption>
+         <p><img src="lab3-figure3.png" >
+           <figcaption>
+       All four figures are captioned with a legend naming the unit. Map 3 (z-score) is labelled in standard-deviation units, distinct from the "% DEM" labels used elsewhere
+      </figcaption>
+         <p> <img src="lab3-figure4.png" >
+          <figcaption>
+       All four figures are captioned with a legend naming the unit. Map 3 (z-score) is labelled in standard-deviation units, distinct from the "% DEM" labels used elsewhere
+      </figcaption>
+         
+         <p> <img src="lab3-figure5.png" >
+      
+               <figcaption>
+       All four figures are captioned with a legend naming the unit. Map 3 (z-score) is labelled in standard-deviation units, distinct from the "% DEM" labels used elsewhere
+      </figcaption>
+              <!--
+      </iframe>
+      -->
+     
+    </figure>
+
+  
+  
+  </tr>
   </thead>
   <tbody>
     <tr>
@@ -163,16 +179,38 @@
        
     <h2>What I found</h2>
     <p>
-     The most significant finding came from Part 2: the Republican candidate won about 84% of counties (2,555 vs. 408), while the two parties' national vote totals were nearly level (about 65.0M vs. 64.7M; the gap widens to roughly 62.5M vs. 61.2M once the Alaska duplication is corrected). Both facts come from the same 3,139-row table, but Map 1 (a choropleth) can only show the county count. Separately, the three classification schemes in Part 4 (equal interval / quantile / natural breaks) produced entirely different breaks and top-class county counts from the same DEM_per column — showing that the argument "support was broad vs. concentrated" depends heavily on the classification method chosen, not on any change in the underlying data. The New York close-up in Map 2 further confirms Thursday's point: the proportional symbol escapes the choropleth's area problem but buys an occlusion problem — and the occlusion is worst exactly where the data is densest and most worth looking at.
-    </p>
+     The planar Web Mercator area is 1.544 times the geodetic area, which is 54% of the fire invented by a projection. The geodetic measurement (533.891), the UTM zone 10N and California Albers areas (533.929 and 534.182) and the area implied by the agency's acreage (534.70) agree to within about 0.2%. The odd one out is the frame the file arrived in. 
+         <p>
+     My hand trace is 2.8% below the geodetic figure with twelve vertices and no care, so the error in this workflow lives in the frame, not in the tracing. It is about twenty times larger.
 
-    <h2>What this does not show</h2>
+Where would I have found out the frame, if the lab had not told me to look? Probably never in a normal workflow. The coordinate system sits in the service definition, which the map reads on every request, but not in any of the four places a person looks (map, legend, pop-up, attribute table). The most likely moment is when my number disagrees with someone else's, and until then it would flow on into any per-hectare figure computed afterwards.
+ </figcaption>
+         <p><img src="lab3-excel1.png" >
+Web Mercator stretches distances by sec(φ) and areas by sec²(φ). At the fire's latitude (36.326°N), sec² = 1.5406. The measured ratio of planar to geodetic area is 1.5440. They agree to about two parts in a thousand, from one cosine and nothing else. That licenses me to say that any area I read off a web map is already wrong by a number I can compute from its latitude alone, regardless of software, polygon shape or size, so I can estimate the correction before measuring and must state the measurement frame next to every figure.
+  
+ 
+  My study area (the Soberanes Fire) lies at about 36.3°N, where Web Mercator inflates planar area by about 54%.
+  
+  </figcaption>
+         <p><img src="lab3-excel2.png" >
+   
+              
+              Band = geodetic perimeter (441.955 km) × cell size, as a share of the geodetic area (534.182 km²). At Landsat resolution the grid band is about 2.5% of the area and the projection error is about 54%, so the frame is more than twenty times the grid. The ranking is not general, though. It flips for a small, narrow feature mapped with a coarse sensor near the equator: for example a 500 m cell product on this same fire at 0° latitude would still carry a grid band of about 41%, while Web Mercator would add nothing.
+            <p>The perimeter
+The perimeter figure has the same frame problem plus a resolution problem. Shape__Length (Web Mercator) is 556.808 km and the geodetic length is 441.955 km, a ratio of 1.26 (and 1.26² = 1.59, close to the area ratio of 1.54; the gap exists because the fire spans a third of a degree of latitude and the boundary is not evenly spread across it). The isoperimetric ratio 4πA/P² is 0.034 (a circle gives 1). A circle of 534 km² has a circumference of about 82 km, while the file claims 442 km. My hand-traced outline has a perimeter of 97.23 mi (about 156.5 km). The three numbers are 82, 156 and 442 km for one fire, so a perimeter is not a length; it is a decision about resolution. The largest ring holds 99.986% of the area and carries about 22,800 vertices along a 380 km boundary, an average spacing of about 17 m, shorter than the 30 m cell that produced it. Generalised to the 30 m cell, the perimeter falls by about 6% while the area moves by less than a twentieth of one per cent. Area is robust to resolution and perimeter is not.
+                <p>Which number would I publish?
+I would publish the geodetic area, 533.9 km² (about 131,900 acres), with the caption "geodetic, WGS 84 ellipsoid". It agrees with the UTM and California Albers areas and with the agency's acreage, and it is robust to the 30 m cell size (the grid band is about 2.5%). If the question is about the ground that actually burned, I would report it as a lower bound of about 572 km² of surface area, stating the slope method. I would publish the Web Mercator figure (824.3 km²) only labelled as a display-frame figure. I would publish the perimeter only with the resolution stated beside it, because the same fire has perimeters of 82, 156 and 442 km depending on how it is traced.
+
+The fire agency's figure of 132,127 acres converts to 534.70 km², which sits within about 0.15% of my geodetic acres (131,927) and right next to the geodetic, UTM and Albers rows. It is therefore most likely in a geodetic or equal-area-type frame, not in Web Mercator. To confirm it I would have to read the incident's GIS metadata or the agency's method statement for the projection and datum used.
+              <h2>What this does not show</h2>
     <div class="limits">
       <p>
-None of the four maps shows third-party voters — in 78 counties they exceed a tenth of the vote, yet DEM_per and GOP_per do not sum to 1, and the missing share is not drawn in any form on Map 1. Non-voters (unregistered or non-participating residents) are likewise entirely outside the scope of this dataset. See the AI-usage disclosure below regarding AI assistance used in drafting this entry and formatting the HTML.
+（1）Resolution limit on the perimeter. The boundary was traced from a 30 m raster, so it cannot be located more precisely than one cell, and its length depends on resolution. I verified area robustness only for the main ring and only by the figure given in the lab handout.
+          <p>  （2）Geoid model spread. The three models differ by 0.7 to 2 m at my three points. Converting between ellipsoidal and orthometric height therefore carries an uncertainty of that size, and I use EGM2008 as my reference.
+           <p> （3）Vertical datum of the scene. I did not confirm which vertical datum the Scene Viewer elevation values use (ellipsoidal or orthometric), so the profile heights in Figure 4 carry the unknown separation discussed in the geoid section.
+            <p>（4）Given values. The UTM 10N and California Albers areas were supplied by the lab, not computed by me, because ArcGIS Online cannot reproject a layer I do not own.
+            <p>（5）Hand trace. A single trace by one person; its 2.8% difference is a single sample, not an error estimate.
            
-      <p>
-        
     </div>
 
     <a class="back" href="../index.html#labs">← Back to all labs</a>
