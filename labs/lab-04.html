@@ -32,7 +32,7 @@
 
     <!-- EDIT THIS: a title that says what you found, not what you did.
          "Where the metro does not go" beats "Lab 1 report". -->
-    <h1>Map 3 One perimeter, three answers
+    <h1>Map 4 The Same Layer, Four Cell Sizes
 </h1>
 
     <!-- ============================================================
@@ -77,25 +77,33 @@
        <p><img src="lab3-figure1.png" >
          <figcaption>
       Figure 1.
-Esri Landsat Explorer swipe comparison of two Landsat 8-9 scenes near Big Sur, with Highway 1 running down the middle. The left pane is the 6.20 scene and the right pane is the 10.26 scene, so the burn scar appears as the change in colour between them. Cell size is 30 m. No area is measured in this figure.
-      </figcaption>
+Shanghai's administrative districts at 1 km and 30 m
+         
+        <p>  The comparison shows how cell size affects the representation of administrative boundaries. Both maps cover the same area in EPSG:32651, but the 1 km grid represents boundaries with much larger steps than the 30 m grid. A finer grid provides more spatial detail in the representation, but does not automatically make the original boundary data more accurate.
+         </figcaption>
          <p><img src="lab3-figure2.png" >
               <figcaption>
        Figure 2.
-Landsat 8-9 image zoomed in past the point where it gets sharper, near Coast Ridge Road in the Santa Lucia Range. Each 30 m cell holds a single value, so the image contains no detail finer than one cell. The viewer smooths the cells, so the grid shows as soft blocks rather than hard squares. No area is measured in this figure.
-         <p><img src="lab3-figure3.png" >
+Boundary detail in the 30 m raster
+     <p>
+                   The staircase pattern illustrates the conversion of a continuous polygon boundary into discrete square cells. The 30 m cell size describes the grid spacing, not the original positional accuracy of the boundary.
+                   
+                   <p><img src="lab3-figure3.png" >
            <figcaption>
        Figure 3.
-The Soberanes perimeter as an unfilled outline in Map Viewer, stored in Web Mercator (EPSG:3857), shown at full extent. The small black dots inside the main outline are detached rings, and 686 of the 690 rings are smaller than one 30 m Landsat cell (900 m²). The ragged edge follows the cells of the raster the boundary was traced from. No area is measured in this figure.
-      </figcaption>
-         <p> <img src="lab3-figure4.png" >
+Survey records with inconsistent district assignments
+           </figcaption>
+    These points represent records whose reported district differs from the district identified by the spatial join. The citywide view reveals that the inconsistencies are not limited to a few points close to district boundaries.
+                   <p> <img src="lab3-figure4.png" >
           <figcaption>
        Figure 4.
-Scene Viewer scene “Lab 3 · Soberanes terrain”: the perimeter (stored in EPSG:3857) over the Terrain3D ground surface, with an elevation profile drawn across the burn. The profile is 12.3 mi (19.8 km) long, rises from about 460 ft (140 m) to 4,082 ft (1,244 m), and has an average slope of 21.6° uphill and 21.0° downhill. Heights are in feet, as reported by the Scene Viewer tool. No area is stated in this figure.
-      </figcaption>
+Survey point distribution across Shanghai
+
+The point distribution shows a strong concentration in central Shanghai and a broader spread across the municipality. This map provides geographic context for the analysis while keeping individual respondents unidentifiable.
+          </figcaption>
          
-         <p> <img src="lab3-figure5.png" >
-      
+       All four figures should be exported from QGIS. The captions identify the spatial frame and resolution wherever a raster is shown. The maps are intended to communicate spatial patterns rather than reveal individual respondents' locations.
+                        
                <figcaption>
               <!--
       </iframe>
