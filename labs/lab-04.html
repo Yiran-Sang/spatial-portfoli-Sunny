@@ -1,1 +1,183 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lab 04 ·  Sunny Sang</title>
+
+<!-- Note the ../ — this page is inside the labs folder, so it has to
+     look one level up to find the stylesheet. -->
+<link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="../index.html">Sunny Sang</a>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="../index.html#labs">Labs</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<article class="entry">
+  <div class="wrap wrap-narrow">
+
+    <p class="kicker">Lab 04 · October 2026</p>
+
+    <!-- EDIT THIS: a title that says what you found, not what you did.
+         "Where the metro does not go" beats "Lab 1 report". -->
+    <h1>Map 3 One perimeter, three answers
+</h1>
+
+    <!-- ============================================================
+         The six parts. Every entry in this course has all six.
+         Do not delete a heading — if a section is thin, that is
+         information too.
+         ============================================================ -->
+
+    <h2>The question：</h2>
+    <p>
+      How does the choice of coordinate reference system, raster cell size, and grid origin affect the measured area of Shanghai's districts and the spatial assignment of respondents in a survey conducted after the 2022 lockdown?
+    <h2>The data</h2>
+    <p>This analysis uses two files downloaded from Brightspace in October 2026:
+      <p>LAB04_shanghai-lockdown-survey.csv contains 3,348 survey records, including reported districts, neighbourhood information, coordinates, and screening measures related to depression, anxiety, and food insecurity. The file uses GB18030 encoding rather than UTF-8.
+    <p> LAB04_shanghai-districts.geojson contains polygons representing Shanghai's sixteen administrative districts. Its attributes include official administrative codes, Chinese and English district names, and a survey_code field used to compare survey records with spatial assignments.
+    <p>The CSV contains 553 records whose GPS information is marked (空), meaning empty. Although the column is fully populated, these records have no usable coordinates and cannot be represented as points. Consequently, the point layer contains 2,795 features, approximately 16.5% fewer records than the original CSV.
+    <p>The district boundaries come from DataV.GeoAtlas, published by Alibaba. The source does not state a licence, positional accuracy, or contact information. The survey addresses had already been removed before the file was distributed for this lab, but precise coordinates remain potentially identifying.
+  <p> These limitations matter because a dataset's apparent precision and completeness do not necessarily reflect the quality or coverage of the information it contains.
+    <p> 
+    <h2>The method</h2>
+    <p>I used QGIS to load the survey as a point layer and the administrative districts as polygons. The CSV was imported using GB18030 encoding, with longitude assigned to X and latitude to Y in EPSG:4326 (WGS 84). The district boundaries were styled with transparent fills and visible outlines to make their relationship with the survey points easier to inspect.
+    <p>For area measurement, the district layer was reprojected into four coordinate reference systems: EPSG:3857 (Web Mercator), EPSG:32651 (WGS 84 / UTM zone 51N), EPSG:4549 (CGCS2000 / 3-degree Gauss-Kruger, central meridian 120°E), and EPSG:4547 (central meridian 114°E). Planar areas were calculated using area($geometry) and compared with the ellipsoidal reference area.
+    <p>The survey points were then reprojected to EPSG:32651. I used QGIS's Join attributes by location algorithm, with the within predicate, to compare each respondent's reported district code with the district containing the point. A mismatch field records whether the two assignments disagree.
+
+
+    <p>To investigate rasterization, the sixteen district polygons were converted into four GeoTIFF rasters using GDAL's Rasterize (vector to raster) algorithm. The cell sizes were 1,000 m, 250 m, 100 m, and 30 m. All rasters use the same extent in EPSG:32651:
+
+295000, 430000, 3393000, 3528000
+    <p>The burn-in field was survey_code, the NoData value was 0, and the output data type was Byte. Raster areas can be estimated by multiplying the number of cells assigned to a district by the area of each cell. A second 1 km raster, shifted by half a cell in both directions, demonstrates the sensitivity of these estimates to grid origin.
+    <p>
+    <p> 
+         <!-- ============================================================
+         <iframe width="700" height="600" allow="local-network-access; 
+         ============================================================ -->
+    
+      <th>Map</th>
+      <th>Visual channel</th>
+      <th>What it makes easy to see</th>
+      <th>What it hides or distorts</th>
+    
+  <figure>
+       <p><img src="lab3-figure1.png" >
+         <figcaption>
+      Figure 1.
+Esri Landsat Explorer swipe comparison of two Landsat 8-9 scenes near Big Sur, with Highway 1 running down the middle. The left pane is the 6.20 scene and the right pane is the 10.26 scene, so the burn scar appears as the change in colour between them. Cell size is 30 m. No area is measured in this figure.
+      </figcaption>
+         <p><img src="lab3-figure2.png" >
+              <figcaption>
+       Figure 2.
+Landsat 8-9 image zoomed in past the point where it gets sharper, near Coast Ridge Road in the Santa Lucia Range. Each 30 m cell holds a single value, so the image contains no detail finer than one cell. The viewer smooths the cells, so the grid shows as soft blocks rather than hard squares. No area is measured in this figure.
+         <p><img src="lab3-figure3.png" >
+           <figcaption>
+       Figure 3.
+The Soberanes perimeter as an unfilled outline in Map Viewer, stored in Web Mercator (EPSG:3857), shown at full extent. The small black dots inside the main outline are detached rings, and 686 of the 690 rings are smaller than one 30 m Landsat cell (900 m²). The ragged edge follows the cells of the raster the boundary was traced from. No area is measured in this figure.
+      </figcaption>
+         <p> <img src="lab3-figure4.png" >
+          <figcaption>
+       Figure 4.
+Scene Viewer scene “Lab 3 · Soberanes terrain”: the perimeter (stored in EPSG:3857) over the Terrain3D ground surface, with an elevation profile drawn across the burn. The profile is 12.3 mi (19.8 km) long, rises from about 460 ft (140 m) to 4,082 ft (1,244 m), and has an average slope of 21.6° uphill and 21.0° downhill. Heights are in feet, as reported by the Scene Viewer tool. No area is stated in this figure.
+      </figcaption>
+         
+         <p> <img src="lab3-figure5.png" >
+      
+               <figcaption>
+              <!--
+      </iframe>
+      -->
+     
+    </figure>
+
+  
+  
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1 · Predominant category</td>
+      <td>Hue</td>
+      <td>Nearly the whole country appears in a single colour, making it immediately clear that Republicans won an overwhelming majority of counties.</td>
+      <td>It shows no gradation of margin, and third-party voters are entirely absent; sparsely populated counties occupy far more visual weight than their population warrants.</td>
+    </tr>
+    <tr>
+      <td>2 · Graduated symbol</td>
+      <td>Size</td>
+      <td>Dense metro areas (New York, Los Angeles, San Francisco) stand out clearly with their vote-count magnitude; sparsely populated counties no longer dominate the view by land area the way they do in a choropleth.</td>
+      <td>The New York close-up shows several circles overlapping (Manhattan, Brooklyn, Queens and neighbouring counties nearly stacked together), making individual county values hard to distinguish; the occlusion occurs precisely where the data is densest and most interesting — a structural cost of this visual channel, not bad luck.</td>
+    </tr>
+    <tr>
+      <td>3 · Standardised score</td>
+      <td>Value (lightness)</td>
+      <td>It clearly shows which regions deviate most from the national average county — coastal and urban areas read very differently from the interior, with extreme deviations immediately visible.</td>
+      <td>The pale midpoint (z near 0) reads as neutral, but it actually represents a county with only about 32% Democratic support — easily misread by a reader as a "balanced" or "ordinary" position.</td>
+    </tr>
+    <tr>
+      <td>4 · Cartogram</td>
+      <td>Area</td>
+      <td>It reallocates each state's visual area by true vote weight — populous, high-turnout states (California, New York, Texas) swell visibly while smaller states shrink, closer to the intuition that every vote counts equally.</td>
+      <td>Geographic shape is heavily distorted, making individual states hard to recognise by outline alone; real distance and direction are lost entirely.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>A campaign would likely choose whichever map favours its own coalition — a party that wins on geography would favour Map 1, since a choropleth makes "owning more land" look like a commanding lead; a party whose support concentrates in cities would favour Map 2 or Map 4, which better reflect true population/vote weight. As the analyst, I would publish <strong>Map 4 (Cartogram)</strong> together with the full disclosure below, because it most directly encodes how much each vote weighs into visual area, rather than letting sparsely populated, land-heavy regions shout louder than their actual weight. This is defensible rather than merely convenient: it directly answers the core problem diagnosed in Part 2 — that a choropleth gives area a voice disproportionate to population — rather than being chosen simply because it looks compelling.</p>
+
+
+    <h2>What I found</h2>
+    <p>Measurement declaration: Areas measured planarly in EPSG:32651 (WGS 84 / UTM 51N) differ from ellipsoidal areas by less than 0.03% at this latitude. Gridded areas depend on cell size and grid origin. For the 1 km grid, shifting the origin by half a cell changes the estimated area of some small districts by several percentage points.
+                 <p>Projection affects area measurement
+                 <p>The lab's reference measurements give an ellipsoidal total of 7,988.523 km² for the sixteen district polygons. In comparison, the total measured in Web Mercator is approximately 10,955.3 km², an inflation of 37.14%. EPSG:32651 differs from the ellipsoidal total by approximately −0.027%, while EPSG:4549 differs by approximately +0.051%. The deliberately incorrect central meridian in EPSG:4547 produces a difference of approximately +1.27%.
+
+
+                 <p>
+
+These results demonstrate that a familiar web-mapping projection is not necessarily suitable for area measurement. The total polygon area also exceeds Shanghai's published land area of 6,340.5 km². This difference reflects the need to distinguish the area represented by the administrative polygons from the statistical definition of land area.
+                 <p>Raster resolution changes the cost and the result
+                 <p>Using the fixed 135 km by 135 km extent, the four grids contain 18,225 cells at 1 km, 291,600 at 250 m, 1,822,500 at 100 m, and 20,250,000 at 30 m. The number of cells grows with the square of the inverse cell size. The reference file sizes are approximately 19 kB, 292 kB, 1.8 MB, and 20.3 MB respectively, although the exact size and processing time depend on the output settings and system.
+ <p>The finer raster therefore requires substantially more storage while still representing the original vector boundaries as grid cells. The total area can look stable even when individual district estimates differ: at 1 km resolution, the reference measurements put Putuo approximately 4.6% below its vector area and Jing'an approximately 3.4% above it.
+              <p>Grid origin introduces another source of uncertainty  <p>Changing the grid origin while keeping the cell size fixed can change the estimated area without changing the underlying polygon. For example, the reference measurements for Xuhui shift from −3.8% to +5.3% relative to the vector area when the 1 km grid moves by half a cell. This is a swing of 9.1 percentage points.
+                 <p> For this reason, a gridded area should be reported with its resolution and origin, and its sensitivity should be considered before it is published. A finer cell size is not, by itself, sufficient evidence that an area estimate is more accurate.
+                 <p>Spatial joins reveal inconsistencies
+                 <p>The reference spatial join identifies 245 inconsistent records among 2,795 points, or approximately 8.8%. The reference measurements also show that 158 of these records are more than 5 km from the district they claim, while only 19 lie within 500 m of the relevant boundary. This suggests that boundary precision alone cannot explain the full pattern.
+                     <p> The comparison does not establish whether the reported district or the coordinate is correct. It establishes that the two sources of information disagree and that district-level analysis must account for this uncertainty.
+                 <p>
+                   
+                   <h2>What this does not show</h2>
+    <div class="limits">
+     The analysis does not establish that the coordinates or the reported district codes are always correct. Respondents may have moved, selected an incorrect district, or supplied a coordinate that did not represent their home. The 553 records without usable coordinates also mean that spatial analysis excludes approximately one-sixth of the original survey.
+ <p> The boundary layer has its own limitations. Its vertices are much more widely spaced than the nominal 30 m raster resolution might suggest: the reference analysis gives 3,443 vertices and a summed perimeter of approximately 2,066 km, equivalent to a mean segment length of roughly 600 m. A 30 m grid therefore cannot recover positional detail that the original vector data never contained.
+      <p> Finally, the survey contains sensitive information about identifiable people. The original CSV must not be published, and the maps must not allow individual respondents to be located. The boundary data also has no stated licence, so this portfolio presents derived results and map images rather than redistributing the source file.
+      <p>These limitations do not make spatial analysis useless. They define the claims the analysis can reasonably support and the uncertainty that should accompany those claims.
+      <p> <p>
+
+    </div>
+
+    <a class="back" href="../index.html#labs">← Back to all labs</a>
+
+  </div>
+</article>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap wrap-narrow">
+    <p>Sunny· SOCS-SHU 205 · NYU Shanghai · Fall 2026</p>
+  </div>
+</footer>
+
+</body>
+</html>
