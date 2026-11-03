@@ -1,0 +1,192 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Problem Set 1 ·  Sunny Sang</title>
+
+<!-- Note the ../ — this page is inside the labs folder, so it has to
+     look one level up to find the stylesheet. -->
+<link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="../index.html">Sunny Sang</a>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="../index.html#labs">Labs</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<article class="entry">
+  <div class="wrap wrap-narrow">
+
+    <p class="kicker">Problem Set 1 · October 2026</p>
+
+    <!-- EDIT THIS: a title that says what you found, not what you did.
+         "Where the metro does not go" beats "Lab 1 report". -->
+    <h1>Did Neighborhood Bonding Social Capital Differ Between Central and Outer Shanghai?
+
+</h1>
+
+    <!-- ============================================================
+         The six parts. Every entry in this course has all six.
+         Do not delete a heading — if a section is thin, that is
+         information too.
+         ============================================================ -->
+
+    <h2>The question：</h2>
+    <p>
+      Did Neighborhood Bonding Social Capital Differ Between Central and Outer Shanghai?
+<h2>The data</h2>
+    <p>This analysis uses data from the 2022 Shanghai Lockdown Study, an online survey conducted between April 29 and June 1, 2022. The survey was distributed in Chinese through Wenjuan Xing to adults who were in Shanghai during the lockdown. Participants were recruited through purposive sampling, with a target of approximately 200 respondents in each of Shanghai's 16 districts.
+
+      <p>The analysis uses 2,795 respondents with available geographic coordinates. These coordinates allow each respondent to be assigned to a district through a spatial join. The findings therefore describe the respondents included in this analytical sample, rather than representing all residents of Shanghai.
+ <p> LAB04_shanghai-districts.geojson contains polygons representing Shanghai's sixteen administrative districts. Its attributes include official administrative codes, Chinese and English district names, and a survey_code field used to compare survey records with spatial assignments.
+    <p>The main outcome variable is Social capital-bond. Its values range from 4 to 20, with higher values representing stronger neighborhood bonding social capital. The geographic unit is the administrative district. The 16 districts are divided into two groups:
+  <p>Central Shanghai (7 districts): Huangpu, Xuhui, Changning, Jing'an, Putuo, Hongkou, and Yangpu.
+<p>Outer Shanghai (9 districts): Pudong, Minhang, Baoshan, Jiading, Songjiang, Qingpu, Fengxian, Jinshan, and Chongming.
+<p>The comparison uses the mean bonding social capital score among respondents in each region. Each respondent contributes equally to the regional mean.
+ 
+    <h2>The method</h2>
+    <p>The analysis has four steps.
+ <p>1. 	Assign. Each respondent’s GPS point was matched to the district polygon that contains it.
+<p>2. 	Summarize. For each of the 16 districts, I obtained the number of respondents, the total score and the mean score (Summarize Within in ArcGIS Online).
+
+    <p>3. 	Group. Central Shanghai consists of seven districts: Huangpu, Xuhui, Changning, Jing’an, Putuo, Hongkou and Yangpu. Outer Shanghai consists of the other nine: Pudong, Minhang, Baoshan, Jiading, Songjiang, Jinshan, Qingpu, Fengxian and Chongming.
+    <p>4. 	Compare. A region’s mean is its total score divided by its number of respondents, so every respondent counts equally and small districts, such as Chongming (n = 67), do not outweigh large ones, such as Pudong (n = 280). I tested the difference between the two regional means with Welch’s t-test, which does not assume equal variances, and reported the effect size as Cohen’s d.
+    <p> 
+         <!-- ============================================================
+         <iframe width="700" height="600" allow="local-network-access; 
+         ============================================================ -->
+    
+      <th>Map</th>
+      <th>Visual channel</th>
+      <th>What it makes easy to see</th>
+      <th>What it hides or distorts</th>
+    
+  <figure>
+       <p><img src="截屏2026-10-19 11.07.26.png" >
+         <figcaption>
+      Figure 1.
+Shanghai's administrative districts at 1 km and 30 m
+         
+        <p>  The comparison shows how cell size affects the representation of administrative boundaries. Both maps cover the same area in EPSG:32651, but the 1 km grid represents boundaries with much larger steps than the 30 m grid. A finer grid provides more spatial detail in the representation, but does not automatically make the original boundary data more accurate.
+         </figcaption>
+         <p><img src="截屏2026-10-19 11.40.04.png" >
+              <figcaption>
+       Figure 2.
+Boundary detail in the 30 m raster
+     <p>
+                   The staircase pattern illustrates the conversion of a continuous polygon boundary into discrete square cells. The 30 m cell size describes the grid spacing, not the original positional accuracy of the boundary.
+                   
+                   <p><img src="截屏2026-10-19 11.43.30.png" >
+           <figcaption>
+       Figure 3.
+Survey records with inconsistent district assignments
+           </figcaption>
+    These points represent records whose reported district differs from the district identified by the spatial join. The citywide view reveals that the inconsistencies are not limited to a few points close to district boundaries.
+                   <p> <img src="截屏2026-10-19 11.45.49.png" >
+          <figcaption>
+       Figure 4.
+Survey point distribution across Shanghai
+
+The point distribution shows a strong concentration in central Shanghai and a broader spread across the municipality. This map provides geographic context for the analysis while keeping individual respondents unidentifiable.
+          </figcaption>
+         
+       All four figures should be exported from QGIS. The captions identify the spatial frame and resolution wherever a raster is shown. The maps are intended to communicate spatial patterns rather than reveal individual respondents' locations.
+                        
+               <figcaption>
+              <!--
+      </iframe>
+      -->
+     
+    </figure>
+
+  
+  
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1 · Predominant category</td>
+      <td>Hue</td>
+      <td>Nearly the whole country appears in a single colour, making it immediately clear that Republicans won an overwhelming majority of counties.</td>
+      <td>It shows no gradation of margin, and third-party voters are entirely absent; sparsely populated counties occupy far more visual weight than their population warrants.</td>
+    </tr>
+    <tr>
+      <td>2 · Graduated symbol</td>
+      <td>Size</td>
+      <td>Dense metro areas (New York, Los Angeles, San Francisco) stand out clearly with their vote-count magnitude; sparsely populated counties no longer dominate the view by land area the way they do in a choropleth.</td>
+      <td>The New York close-up shows several circles overlapping (Manhattan, Brooklyn, Queens and neighbouring counties nearly stacked together), making individual county values hard to distinguish; the occlusion occurs precisely where the data is densest and most interesting — a structural cost of this visual channel, not bad luck.</td>
+    </tr>
+    <tr>
+      <td>3 · Standardised score</td>
+      <td>Value (lightness)</td>
+      <td>It clearly shows which regions deviate most from the national average county — coastal and urban areas read very differently from the interior, with extreme deviations immediately visible.</td>
+      <td>The pale midpoint (z near 0) reads as neutral, but it actually represents a county with only about 32% Democratic support — easily misread by a reader as a "balanced" or "ordinary" position.</td>
+    </tr>
+    <tr>
+      <td>4 · Cartogram</td>
+      <td>Area</td>
+      <td>It reallocates each state's visual area by true vote weight — populous, high-turnout states (California, New York, Texas) swell visibly while smaller states shrink, closer to the intuition that every vote counts equally.</td>
+      <td>Geographic shape is heavily distorted, making individual states hard to recognise by outline alone; real distance and direction are lost entirely.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>A campaign would likely choose whichever map favours its own coalition — a party that wins on geography would favour Map 1, since a choropleth makes "owning more land" look like a commanding lead; a party whose support concentrates in cities would favour Map 2 or Map 4, which better reflect true population/vote weight. As the analyst, I would publish <strong>Map 4 (Cartogram)</strong> together with the full disclosure below, because it most directly encodes how much each vote weighs into visual area, rather than letting sparsely populated, land-heavy regions shout louder than their actual weight. This is defensible rather than merely convenient: it directly answers the core problem diagnosed in Part 2 — that a choropleth gives area a voice disproportionate to population — rather than being chosen simply because it looks compelling.</p>
+
+
+    <h2>What I found</h2>
+    <p>Central districts scored higher than outer districts, the opposite of what I expected. The mean score was 11.57 in central Shanghai and 11.18 in outer Shanghai, a difference of 0.39 points (Table 1). This difference is statistically significant (Welch t(2,328) = 3.46, p = 0.0006) but small: it is about 3.5% of the outer mean, and Cohen’s d is 0.13. Both regions score slightly below the scale midpoint of 12.
+    <p>The district-level results show that the two regions overlap a great deal. Outer districts range from 10.26 to 11.90 and central districts from 11.07 to 11.81, so the variation inside each group is larger than the 0.39-point gap between them. The three lowest districts are all outer districts: Fengxian (10.26), Qingpu (10.65) and Jiading (10.89). The highest mean belongs to an outer district, Chongming (11.90), but it rests on only 67 respondents and has the widest confidence interval (±0.85).
+
+                 <p>The analysis shows a small difference in average neighborhood bonding social capital between central and outer Shanghai.
+
+                 <p>
+
+The mean score for central Shanghai was 11.57, based on 1,081 respondents across seven districts. The mean score for outer Shanghai was 11.18, based on 1,714 respondents across nine districts. The difference between the two regional means was 0.39 points, with central Shanghai scoring higher.
+ <p>This result is opposite to the expected direction proposed in the presentation. However, the difference is relatively small, representing approximately 3.5% of the outer Shanghai mean.
+               
+
+<p>There was also considerable variation among individual districts. In outer Shanghai, district-level means ranged from 10.26 to 11.90. In central Shanghai, they ranged from 11.07 to 11.81. Fengxian had the lowest district mean at 10.26, followed by Qingpu at 10.65 and Jiading at 10.89. Chongming had the highest mean at 11.90, although its result was based on 67 respondents.
+<p>These results suggest that variation between individual districts may be more substantial than the difference between the two broader regional groups.
+
+<p>Sensitivity Analysis
+             <p> I changed two analytic decisions, one at a time, and compared each result with my original analysis (GPS-matched districts, mean score; central 11.57, outer 11.18, difference +0.39, p = 0.0006).
+      <p>First, I replaced GPS-matched districts with the districts respondents reported. The two rules placed 95.6% of respondents in the same region, and the difference was +0.47 (central 11.60, outer 11.13; p < 0.001), slightly larger than the original.
+
+                 <p>Second, I compared the share of low scorers instead of means. Below the sample median (12), 45.8% of central and 51.3% of outer respondents were low (−5.6 percentage points); in the bottom quartile (≤ 9), the shares were 23.9% and 29.9% (−6.0 points). Both gaps were significant (p = 0.004 and p < 0.001).
+
+                   <h2>What this does not show</h2>
+    <div class="limits">
+    The gap is statistically significant, but it is small (d = 0.13). With 2,795 respondents, even a small difference can reach significance, so I would not read it as a large one. The two regions also overlap a lot, and the variation inside each group is bigger than the gap between them, which means a regional average says little about any single resident.
+<p> There are also limits in the data. I left out 553 respondents (16.5%) because their coordinates were missing, although their average score was similar to everyone else’s. I do not know how respondents were recruited, so the results describe these respondents and not necessarily all of Shanghai. Some districts are small as well; Chongming has only 67 respondents.
+
+<p> Finally, splitting 16 districts into central and outer was my own decision, and a different cut-off could change the result. The sensitivity analysis in Section 5 tests how respondents were assigned to regions and how the outcome was defined, but not this cut-off. And because I did not control for other characteristics, I cannot say that living in central Shanghai causes higher bonding social capital.  <p>These limitations do not make spatial analysis useless. They define the claims the analysis can reasonably support and the uncertainty that should accompany those claims.
+      <p> <p>
+
+    </div>
+
+    <a class="back" href="../index.html#labs">← Back to all labs</a>
+
+  </div>
+</article>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap wrap-narrow">
+    <p>Sunny· SOCS-SHU 205 · NYU Shanghai · Fall 2026</p>
+  </div>
+</footer>
+
+</body>
+</html>
