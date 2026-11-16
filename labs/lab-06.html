@@ -47,19 +47,111 @@
     <p>Q1. Write the Yangtze delta ratio and the Changtang value from Part 2, and both R² values. Then, before Part 4, write one sentence: which model would you report, and why?
 
        <p>The mean nighttime radiance in the Yangtze Delta increased from 4.8894 in 2014 to 7.8209 in 2024, with a ratio of 1.5996. This represents an approximately 60% increase in average nighttime radiance over the ten-year period. In contrast, the Changtang Plateau had a mean radiance of only 0.00194 in 2024, indicating extremely low nighttime illumination.
-    <p> Based on R² alone, I would initially choose Model B, which predicts total GDP from total nighttime light. Its R² of 0.8675 indicates a much stronger overall fit than Model A (0.4561).
+ 
+<table>
+  <thead>
+    <tr>
+      <th>Measurement</th>
+      <th>Result</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Yangtze Delta Mean Radiance (2014)</td>
+      <td>4.8894</td>
+    </tr>
+    <tr>
+      <td>Yangtze Delta Mean Radiance (2024)</td>
+      <td>7.8209</td>
+    </tr>
+    <tr>
+      <td>Ratio (2024 / 2014)</td>
+      <td>1.5996</td>
+    </tr>
+    <tr>
+      <td>Changtang Plateau Mean Radiance (2024)</td>
+      <td>0.00194</td>
+    </tr>
+    <tr>
+      <td>Model A R²</td>
+      <td>0.4561</td>
+    </tr>
+    <tr>
+      <td>Model B R²</td>
+      <td>0.8675</td>
+    </tr>
+  </tbody>
+</table>
 
+<p>
+Based on R² alone, I would initially choose Model B because
+it explains a much larger proportion of the variation in GDP
+than Model A.
+</p>
+       
+     
 
        <p>Q2. Write Moran’s I and the p-value for both residuals, from two runs. Why did one of those four numbers move and the other not?
 <p>Under the queen contiguity rule, provinces sharing a boundary or corner are considered neighbours. Hainan was retained in the analysis despite having no neighbours.
-  <p>  Model A shows almost no spatial autocorrelation, and its p-values are not statistically significant. In contrast, Model B has a positive Moran's I and statistically significant p-values below 0.05, suggesting that its prediction errors are spatially clustered.    
+ 
+<table>
+  <thead>
+    <tr>
+      <th>Model</th>
+      <th>Moran's I</th>
+      <th>p-value (Run 1)</th>
+      <th>p-value (Run 2)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Model A</td>
+      <td>-0.0023</td>
+      <td>0.374</td>
+      <td>0.380</td>
+    </tr>
+    <tr>
+      <td>Model B</td>
+      <td>0.2422</td>
+      <td>0.015</td>
+      <td>0.016</td>
+    </tr>
+  </tbody>
+</table>
+
+       
+       <p>  Model A shows almost no spatial autocorrelation, and its p-values are not statistically significant. In contrast, Model B has a positive Moran's I and statistically significant p-values below 0.05, suggesting that its prediction errors are spatially clustered.    
    <p>The Moran's I values remained unchanged because the residuals and neighbour relationships were fixed. However, the p-values changed slightly because the permutation test randomly shuffles residuals 999 times, producing slightly different results in each run.
 
   
 
               <p> Q3. Write the two new values. Did your conclusion change?
  <p>After changing the neighbour rule from queen to knn4, each province was assigned its four nearest neighbours based on the distance between provincial centres. Unlike queen contiguity, this method also gives Hainan neighbours.   <p><img src="Field_1.png" >
-      <p> The overall conclusion did not change. Model A still shows no statistically significant spatial clustering, while Model B continues to exhibit significant positive spatial autocorrelation. In fact, Model B's Moran's I increased from 0.2422 to 0.2753, suggesting somewhat stronger clustering under the KNN4 rule.  <figcaption>
+    
+<table>
+  <thead>
+    <tr>
+      <th>Model</th>
+      <th>Moran's I</th>
+      <th>p-value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Model A</td>
+      <td>0.0141</td>
+      <td>0.309</td>
+    </tr>
+    <tr>
+      <td>Model B</td>
+      <td>0.2753</td>
+      <td>0.011</td>
+    </tr>
+  </tbody>
+</table>
+
+       
+       <p> The overall conclusion did not change. Model A still shows no statistically significant spatial clustering, while Model B continues to exhibit significant positive spatial autocorrelation. In fact, Model B's Moran's I increased from 0.2422 to 0.2753, suggesting somewhat stronger clustering under the KNN4 rule.  <figcaption>
  <p>   This comparison demonstrates that spatial statistical results depend partly on how researchers define neighbourhood relationships.
 
    
