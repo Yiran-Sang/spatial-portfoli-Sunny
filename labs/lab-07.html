@@ -1,0 +1,116 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lab 07 ·  Sunny Sang</title>
+
+<!-- Note the ../ — this page is inside the labs folder, so it has to
+     look one level up to find the stylesheet. -->
+<link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="../index.html">Sunny Sang</a>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="../index.html#labs">Labs</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<article class="entry">
+  <div class="wrap wrap-narrow">
+
+    <p class="kicker">Lab 07 · November 2026</p>
+
+    <!-- EDIT THIS: a title that says what you found, not what you did.
+         "Where the metro does not go" beats "Lab 1 report". -->
+    <h1>Lab 7 ·  Siting a new hospital
+</h1>
+
+    <!-- ============================================================
+         The six parts. Every entry in this course has all six.
+         Do not delete a heading — if a section is thin, that is
+         information too.
+         ============================================================ -->
+
+   
+       <p> 
+    <h2>Questions and Answers</h2>
+    <p>Q1. How many of the 69 candidates have any homes within 1 km?
+       <p>17 of the 69 candidates have homes within 1 km.
+
+
+    <p>Q2. Which two sites come top under score_a, with what scores? 
+       <p>S51 (73.69) and S50 (70.47)
+            
+ <p>Q3. Which two sites come top under score_b? Did the winner change? 
+       <p>S50 (82.88) ahead of S51 (82.46). The winner changed.
+
+ <p>Q4. What happens at the top, and what do those sites have in common?
+       <p>Seven sites tie at 50.00. All of them have cov_pct = 0, so no homes within 1 km.
+
+ <p>Q5. Which site is chosen in every run? Which two appear in four? How much worse is the worst run than the best, in per cent?
+
+       <p>S51 is chosen in every run. S44 and S60 appear in four runs. The worst run (987.1 m) is about 18% worse than the best (838.3 m).
+ 
+      <!-- ============================================================
+         <iframe width="700" height="600" allow="local-network-access; 
+         ============================================================ -->
+    
+      <th>Map</th>
+      <th>Visual channel</th>
+      <th>What it makes easy to see</th>
+      <th>What it hides or distorts</th>
+    
+ 
+       Screenshot 1: Candidate sites ranked by score_a. Weights 0.3 / 0.2 / 0.5 (hospital / road / coverage).
+        <p><img src="screenshot01-06.png" >
+                        <figcaption>
+
+        Screenshot 2: Attribute table sorted by score_b. Weights 0.2 / 0.6 / 0.2 (hospital / road / coverage).
+                             
+                             <p><img src="screenshot02-06.png" >
+           <figcaption>
+     
+      </figcaption>
+         
+                       
+               <figcaption>
+              <!--
+      </iframe>
+      -->
+     
+   
+                      <h2>Data and Reflection</h2>
+    <div class="limits">
+  Data<p>
+      Hospitals and main roads from OpenStreetMap (© OpenStreetMap contributors); homes use residential floor area as a stand-in for demand; the candidate list was built with the 1,100 m rule (no site within 1,100 m of an existing hospital).
+         <p>Reflection
+       <p>  I would defend the coverage-first weights (0.3 hospital / 0.2 road / 0.5 coverage) to the district health bureau. A hospital exists to be near the people who will need it, so the number of residents within reach should count for more than anything else. Road access still matters, because an ambulance that cannot reach a site quickly serves nobody, but it is a condition for a good site rather than the purpose of one. Distance from existing hospitals matters least: it avoids duplication, but an empty site far from everyone helps no one.
+            <p>What decided the answer before any weight was chosen was the 1,100 m rule that built the candidate list. Only 17 of the 69 sites have any homes within 1 km, because the grid looked for buildable land, not land near people. Sites close to existing hospitals were removed before scoring, so no weight could ever pick them. Residents in dense areas near already crowded hospitals, and people living just outside the grid, could end up badly served because their neighbourhoods were never offered as options.
+                 
+<p>  
+    </div>
+
+    <a class="back" href="../index.html#labs">← Back to all labs</a>
+
+  </div>
+</article>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap wrap-narrow">
+    <p>Sunny· SOCS-SHU 205 · NYU Shanghai · Fall 2026</p>
+  </div>
+</footer>
+
+</body>
+</html>
